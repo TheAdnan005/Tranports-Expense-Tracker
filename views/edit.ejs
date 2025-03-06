@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dsr.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <title>Edit</title>
+</head>
+
+<body>
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <h2>Edit Entry</h2>
+            <form id="edit-form" action="/saveChanges/<%= data._id %>" method="post">
+                <label for="edit-movement">Movement Date:</label>
+                <input type="date" id="edit-movement" class="accent-purple" name="movementDate"
+                    value="<%= new Date(data.movementDate).toISOString().split('T')[0] %>" />
+
+                <label for="edit-vehicle-no">Vehicle No:</label>
+                <input type="text" id="edit-vehicle-no" class="caps" name="vehicleNo" value="<%= data.vehicleNo %>" />
+
+                <label for="edit-contr-no">Container No:</label>
+                <input type="text" id="edit-contr-no" class="caps" name="containerNo" value="<%= data.containerNo %>" />
+
+                <label for="edit-twenty">Container Size:</label>
+                <select id="edit-twenty" name="containerSize">
+                    <option value="" disabled>20' / 40'</option>
+                    <option value="20'" <%=data.containerSize==="20'" ? "selected" : "" %>>20'</option>
+                    <option value="40'" <%=data.containerSize==="40'" ? "selected" : "" %>>40'</option>
+                </select>
+
+                <label for="edit-cargo">Cargo:</label>
+                <input type="text" id="edit-cargo" class="caps" name="cargo" value="<%= data.cargo %>" />
+
+                <label for="edit-on-ac">On A/C:</label>
+                <input type="text" id="edit-on-ac" class="caps" name="onAccount" value="<%= data.onAccount %>" />
+
+                <label for="edit-bill-to">Bill To:</label>
+                <input type="text" id="edit-bill-to" class="caps" name="billTo" value="<%= data.billTo %>" />
+
+                <label for="edit-from">From:</label>
+                <input type="text" id="edit-from" class="caps" name="from" value="<%= data.from %>" />
+
+                <label for="edit-to">To:</label>
+                <input type="text" id="edit-to" class="caps" name="to" value="<%= data.to %>" />
+
+
+                <label for="laden-contr-offload">Laden Container Offload:</label>
+                <input type="text" id="editladen-contr-offload" name="ladenContainerOffload" class="caps"
+                    value="<%= data.ladenContainerOffload %>" />
+
+                <label for="edit-invoice-no">Invoice No:</label>
+                <input type="text" id="edit-invoice-no" class="caps" name="invoiceNo" value="<%= data.invoiceNo %>" />
+
+                <label for="edit-invoice-date">Invoice Date:</label>
+                <input type="date" id="edit-invoice-date" class="accent-purple" name="invoiceDate"
+                    value="<%= new Date(data.invoiceDate).toISOString().split('T')[0] %>" />
+
+                <label for="edit-rate">Rate:</label>
+                <input type="number" id="edit-rate" name="rate" value="<%= data.rate %>" />
+
+                <label for="edit-halting">Halting:</label>
+                <input type="number" id="edit-halting" name="halting"
+                    value="<%= (data.halting || 0).toString().trim() %>" />
+
+
+                <label for="edit-total">Total Amount:</label>
+                <input type="number" id="edit-total" name="totalAmount" value="<%= data.totalAmount %>" />
+
+                <label for="edit-advance">Advance Diesel Amount:</label>
+                <input type="number" id="edit-advance" name="advanceDieselAmount"
+                    value="<%= data.advanceDieselAmount %>" />
+
+                <label for="edit-balance">Balance To Be Paid:</label>
+                <input type="number" id="edit-balance" name="balanceToBePaid" value="<%= data.balanceToBePaid %>" />
+
+                <label for="edit-paid-to">Paid to Vendor On:</label>
+                <input type="date" id="edit-paid-to" class="accent-purple" name="paidToVendorOn"
+                    value="<%= data.paidToVendorOn ? new Date(data.paidToVendorOn).toISOString().split('T')[0] : '' %>" />
+
+
+                <label for="edit-billing-rate">Billing Rate:</label>
+                <input type="number" id="edit-billing-rate" name="billingRate" value="<%= data.billingRate %>" />
+
+                <label for="edit-empty-pickup-exp">Empty Pickup Expense:</label>
+                <input type="number" id="edit-empty-pickup-exp" name="emptyPickupExpense"
+                    value="<%= data.emptyPickupExpense %>" />
+
+                <label for="edit-halting-2">Halting:</label>
+                <input type="number" id="edit-halting-2" name="haltingTwo" value="<%= data.haltingTwo %>" />
+
+                <label for="edit-billing-amount">Billing Amount:</label>
+                <input type="number" id="edit-billing-amount" name="billingAmount" value="<%= data.billingAmount %>" />
+
+                <label for="edit-tds-deducted">TDS Deducted:</label>
+                <input type="number" id="edit-tds-deducted" name="tdsDeducted" value="<%= data.tdsDeducted %>"
+                    step="any" />
+
+                <label for="edit-net-amount">Net Amount Received:</label>
+                <input type="number" id="edit-net-amount" name="netAmountReceived"
+                    value="<%= data.netAmountReceived %>" />
+
+                <label for="edit-payment-receipt">Payment Receipt Date:</label>
+                <input type="date" id="edit-payment-receipt" class="accent-purple" name="paymentReceiptDate"
+                    value="<%= new Date(data.paymentReceiptDate).toISOString().split('T')[0] %>" />
+
+                <label for="edit-business-promotion">Business Promotion:</label>
+                <input type="text" id="edit-business-promotion" name="businessPromotion"
+                    value="<%= data.businessPromotion %>" />
+
+                <label for="edit-paid-on">Paid On:</label>
+                <input type="date" id="edit-paid-on" class="accent-purple" name="paidOn"
+                    value="<%= new Date(data.paidOn).toISOString().split('T')[0] %>" />
+
+                <label for="edit-expenses">Trip Expenses:</label>
+                <input type="text" id="edit-expenses" name="tripExpenses" value="<%= data.tripExpenses %>" />
+
+                <label for="edit-margin">Margin:</label>
+                <input type="text" id="edit-margin" name="margin" value="<%= data.margin %>" />
+
+                <label for="edit-transporter">Transporter:</label>
+                <input type="text" id="edit-transporter" class="caps" name="transporter" list="edit-transporter-list"
+                    value="<%= data.transporter %>" />
+                <datalist id="edit-transporter-list"></datalist>
+
+                <label for="edit-remarks">Remarks:</label>
+                <input type="text" id="edit-remarks" name="remarks" value="<%= data.remarks %>" class="caps" />
+
+                <button type="submit" class="confirm-btn" id="confirm-edit">Save Changes</button>
+                <button type="button" class="cancel-btn" onclick="closeModal('edit-modal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/edit.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+</body>
+</html>

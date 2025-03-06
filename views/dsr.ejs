@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/dsr.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <title>DSR Expenses</title>
+
+
+</head>
+
+<body>
+  <h1>DSR EXPENSES</h1>
+  <div class="top box">
+    <div class="search-container">
+      <input class="search" type="text" placeholder="Search here" />
+      <img class="search-icon" src="assets/search.png" alt="Search" />
+      <img class="close-icon" src="assets/close.png" alt="Close" />
+    </div>
+
+    <div class="filter">
+      <select id="filters">
+        <option class="first" va="">Filter By</option>
+        <option value="Vehicle No">Vehicle No</option>
+        <option value="Transporter">Transporter</option>
+        <option value="Cargo">Cargo</option>
+      </select>
+    </div>
+
+    <button class="add-expense" onclick="toggleForm()">+</button>
+  </div>
+  <div class="container">
+    <div id="overlay" class="overlay" onclick="toggleForm()"></div>
+    <div class="popup-form" id="popupForm">
+      <div class="form-header">
+        <span>Add Details</span>
+        <button class="clear" onclick="clearForm()">Clear</button>
+        <button class="close" onclick="toggleForm()">×</button>
+      </div>
+      <form action="/post" method="POST" id="editForm">
+        <div class="popup-form-grid" id="popupFormGrid">
+          <label for="movement">Movement Date:</label>
+          <input type="date" id="movement" name="movementDate" class="accent-purple" />
+
+          <label for="vehicle-no">Vehicle No:</label>
+          <input type="text" id="vehicle-no" name="vehicleNo" class="caps" list="vehicle-suggestions" />
+          <datalist id="vehicle-suggestions"></datalist>
+          <button onclick="clearStoredData()">Clear Stored Vehicles</button>
+
+          <label for="contr-no">Container No:</label>
+          <input type="text" id="contr-no" name="containerNo" class="caps" />
+
+          <label for="twenty">Container Size:</label>
+          <select id="twenty" name="containerSize">
+            <option value="" disabled selected>20' / 40'</option>
+            <option value="20'">20'</option>
+            <option value="40'">40'</option>
+          </select>
+
+          <label for="cargo">Cargo:</label>
+          <input type="text" id="cargo" name="cargo" class="caps" list="cargo-list" />
+          <datalist id="cargo-list"></datalist>
+
+          <label for="on-ac">On A/C:</label>
+          <input type="text" id="on-ac" name="onAccount" class="caps" list="on-ac-list" />
+          <datalist id="on-ac-list"></datalist>
+
+          <label for="bill-to">Bill To:</label>
+          <input type="text" id="bill-to" name="billTo" class="caps" list="bill-to-list" />
+          <datalist id="bill-to-list"></datalist>
+
+          <label for="from">From:</label>
+          <input type="text" id="from" name="from" class="caps" list="from-list" />
+          <datalist id="from-list"></datalist>
+
+          <label for="to">To:</label>
+          <input type="text" id="to" name="to" class="caps" list="to-list" />
+          <datalist id="to-list"></datalist>
+
+          <label for="laden-contr-offload">Laden Container Offload:</label>
+          <input type="text" id="laden-contr-offload" name="ladenContainerOffload" class="caps" list="laden-list" />
+          <datalist id="laden-list"></datalist>
+
+          <label for="invoice-no">Invoice No:</label>
+          <input type="text" id="invoice-no" name="invoiceNo" class="caps" />
+
+          <label for="invoice-date">Invoice Date:</label>
+          <input type="date" id="invoice-date" name="invoiceDate" class="accent-purple" />
+
+          <label for="rate">Rate:</label>
+          <input type="number" id="rate" name="rate" />
+
+          <label for="halting">Halting:</label>
+          <input type="number" id="halting" name="halting" />
+
+          <label for="total">Total Amount:</label>
+          <input type="number" id="total" name="totalAmount" />
+
+          <label for="advance">Advance Diesel Amount:</label>
+          <input type="number" id="advance" name="advanceDieselAmount" />
+
+          <label for="balance">Balance To Be Paid:</label>
+          <input type="number" id="balance" name="balanceToBePaid" />
+
+          <label for="paid-to">Paid to Vendor On:</label>
+          <input type="date" id="paid-to" name="paidToVendorOn" class="accent-purple" />
+
+          <label for="billing-rate">Billing Rate:</label>
+          <input type="number" id="billing-rate" name="billingRate" />
+
+          <label for="empty-pickup-exp">Empty Pickup Expense:</label>
+          <input type="number" id="empty-pickup-exp" name="emptyPickupExpense" />
+
+          <label for="halting-2">Halting:</label>
+          <input type="number" id="halting-2" name="haltingTwo" />
+
+          <label for="billing-amount">Billing Amount:</label>
+          <input type="number" id="billing-amount" name="billingAmount" />
+
+          <label for="tds-deducted">TDS Deducted:</label>
+          <input type="number" id="tds-deducted" name="tdsDeducted" min="0" step="0.01"
+            oninput="validateNumberInput(this)" />
+
+          <label for="net-amount">Net Amount Received:</label>
+          <input type="number" id="net-amount" name="netAmountReceived" min="0" step="0.01"
+            oninput="validateNumberInput(this)" />
+
+          <label for="payment-receipt">Payment Receipt Date:</label>
+          <input type="date" id="payment-receipt" name="paymentReceiptDate" class="accent-purple" />
+
+          <label for="business-promotion">Business Promotion:</label>
+          <input type="text" id="business-promotion" name="businessPromotion" />
+
+          <label for="paid-on">Paid On:</label>
+          <input type="date" id="paid-on" name="paidOn" class="accent-purple" />
+
+          <label for="expenses">Trip Expenses:</label>
+          <input type="text" id="expenses" name="tripExpenses" />
+
+          <label for="margin">Margin:</label>
+          <input type="text" id="margin" name="margin" />
+
+          <label for="transporter">Transporter:</label>
+          <input type="text" id="transporter" name="transporter" class="caps" />
+          <datalist id="transporter-list"></datalist>
+
+          <label for="remarks">Remarks:</label>
+          <input type="text" id="remarks" name="remarks" />
+
+          <div class="btn-container">
+            <button type="submit" class="add-entry">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="tablee">
+      <table class="expense-table" id="expenseTable">
+        <thead>
+          <tr>
+            <th>Sl.no</th>
+            <th>Movement Date</th>
+            <th>Vehicle No</th>
+            <th>Container No</th>
+            <th>Container Size</th>
+            <th>Cargo</th>
+            <th>On A/C</th>
+            <th>Bill To</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Laden Container Offload</th>
+            <th>Invoice No.</th>
+            <th>Invoice Date</th>
+            <th>Rate</th>
+            <th>Halting</th>
+            <th>Total Amount</th>
+            <th>Advance Diesel Amount</th>
+            <th>Balance To Be Paid</th>
+            <th>Paid To Vendor On</th>
+            <th>Billing Rate</th>
+            <th>Empty Pickup Expense</th>
+            <th>Halting</th>
+            <th>Billing Amount</th>
+            <th>TDS Deducted</th>
+            <th>Net Amount Received</th>
+            <th>Payment Receipt Date</th>
+            <th>Business Promotion</th>
+            <th>Paid On</th>
+            <th>Trip Expenses</th>
+            <th>Margin</th>
+            <th>Transporter</th>
+            <th>Remarks</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(item=> { %>
+            <tr>
+              <%sl_no=sl_no+1 %>
+                <td>
+                  <%= sl_no %>
+                </td>
+                <td>
+                  <%= item.movementDate %>
+                </td>
+                <td>
+                  <%= item.vehicleNo %>
+                </td>
+                <td>
+                  <%= item.containerNo %>
+                </td>
+                <td>
+                  <%= item.containerSize %>
+                </td>
+                <td>
+                  <%= item.cargo %>
+                </td>
+                <td>
+                  <%= item.onAccount %>
+                </td>
+                <td>
+                  <%= item.billTo %>
+                </td>
+                <td>
+                  <%= item.from %>
+                </td>
+                <td>
+                  <%= item.to %>
+                </td>
+                <td>
+                  <%= item.ladenContainerOffload %>
+                </td>
+                <td>
+                  <%= item.invoiceNo %>
+                </td>
+                <td>
+                  <%= item.invoiceDate %>
+                </td>
+                <td>
+                  <%= item.rate %>
+                </td>
+                <td>
+                  <%= item.halting %>
+                </td>
+                <td>
+                  <%= item.totalAmount %>
+                </td>
+                <td>
+                  <%= item.advanceDieselAmount %>
+                </td>
+                <td>
+                  <%= item.balanceToBePaid %>
+                </td>
+                <td>
+                  <%= item.paidToVendorOn %>
+                </td>
+                <td>
+                  <%= item.billingRate %>
+                </td>
+                <td>
+                  <%= item.emptyPickupExpense %>
+                </td>
+                <td>
+                  <%= item.haltingTwo %>
+                </td>
+                <td>
+                  <%= item.billingAmount %>
+                </td>
+                <td>
+                  <%= item.tdsDeducted %>
+                </td>
+                <td>
+                  <%= item.netAmountReceived %>
+                </td>
+                <td>
+                  <%= item.paymentReceiptDate %>
+                </td>
+                <td>
+                  <%= item.businessPromotion %>
+                </td>
+                <td>
+                  <%= item.paidOn %>
+                </td>
+                <td>
+                  <%= item.tripExpenses %>
+                </td>
+                <td>
+                  <%= item.margin %>
+                </td>
+                <td>
+                  <%= item.transporter %>
+                </td>
+                <td>
+                  <%= item.remarks %>
+                </td>
+                <td class="action">
+                  <a href="edit/<%= item._id %>">Edit</a>
+                  <a href="delete/<%= item._id %>">Delete</a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+        <button onclick="exportToExcel()">Export to Excel</button>
+      </table>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="/dsr.js"></script>
+</body>
+
+</html>
