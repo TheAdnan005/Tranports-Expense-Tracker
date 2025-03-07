@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors"); 
 const app = express();
 const bodyParser = require("body-parser");
 const TransportSchema = require("./models/transportSchema");
@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.get("/", async (req, res) => {
   let data = await TransportSchema.find();
   data = data.map(item => ({
-    ...item._doc, // Keep existing properties
+    ...item._doc,
     movementDate: item.movementDate ? formatDate(item.movementDate) : '',
     invoiceDate: item.invoiceDate ? formatDate(item.invoiceDate) : '',
     paidToVendorOn: item.paidToVendorOn ? formatDate(item.paidToVendorOn) : '',
@@ -55,7 +55,26 @@ app.get('/delete/:id', async(req,res)=>{
     let deletedUser = await TransportSchema.findByIdAndDelete(req.params.id)
     res.redirect('/')
 })
+// Single endpoint for all suggestions
+app.get("/search", async (req, res) => {
+  const { q: searchQuery, field } = req.query;
 
+  if (!searchQuery || !field) {
+    return res.status(400).json({ error: "Missing query parameters" });
+  }
+
+  try {
+    const results = await TransportSchema.find(
+      { [field]: new RegExp(searchQuery, "i") }, // Dynamic field matching
+      { [field]: 1, _id: 0 } // Dynamic field selection
+    ).limit(5).lean();
+
+    res.json(results.map((item) => item[field])); // Return array of field values
+  } catch (err) {
+    console.error(`Error fetching ${field}:`, err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

@@ -79,3 +79,120 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+// Function to set up autofill for edit form fields
+function setupEditAutofill(inputId, hintId, field) {
+  const input = document.querySelector(`#${inputId}`);
+  if (!input) {
+    console.error(`Input element #${inputId} not found`);
+    return;
+  }
+  
+  const hint = document.querySelector(`#${hintId}`);
+  if (!hint) {
+    console.error(`Hint element #${hintId} not found`);
+    return;
+  }
+  
+  hint.classList.add("edit-autofill-hint");
+  let lastSuggestion = "";
+  let isBackspacePressed = false;
+
+  input.addEventListener("input", async (e) => {
+    if (isBackspacePressed) {
+      isBackspacePressed = false;
+      return;
+    }
+
+    const query = input.value.trim();
+    hint.textContent = "";
+
+    if (query.length < 1) {
+      hint.textContent = "";
+      return;
+    }
+
+    try {
+      const response = await fetch(`/search?q=${query}&field=${field}`);
+      const suggestions = await response.json();
+
+      if (suggestions.length > 0) {
+        const fullSuggestion = suggestions[0];
+        const queryLower = query.toLowerCase();
+        const suggestionLower = fullSuggestion.toLowerCase();
+
+        const matchIndex = suggestionLower.indexOf(queryLower);
+
+        if (matchIndex !== -1) {
+          lastSuggestion = fullSuggestion;
+          const beforeMatch = fullSuggestion.slice(0, matchIndex);
+          const matchedPart = fullSuggestion.slice(
+            matchIndex,
+            matchIndex + query.length
+          );
+          const remaining = fullSuggestion.slice(matchIndex + query.length);
+
+          hint.textContent = beforeMatch + matchedPart + remaining;
+        } else {
+          hint.textContent = "";
+        }
+      } else {
+        hint.textContent = "";
+      }
+    } catch (error) {
+      console.error(`Error fetching suggestions for ${inputId}:`, error);
+      hint.textContent = "";
+    }
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if ((e.key === "Tab" || e.key === "ArrowRight") && hint.textContent) {
+      e.preventDefault();
+      input.value = lastSuggestion;
+      hint.textContent = "";
+    }
+
+    if (e.key === "Escape" || e.key === "Backspace") {
+      hint.textContent = "";
+      lastSuggestion = "";
+
+      if (e.key === "Backspace") {
+        isBackspacePressed = true;
+      }
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!input.contains(e.target) && !hint.contains(e.target)) {
+      hint.textContent = "";
+    }
+  });
+
+  input.addEventListener("click", () => {
+    hint.textContent = "";
+    lastSuggestion = "";
+  });
+
+  input.addEventListener("scroll", () => {
+    hint.style.transform = `translateX(-${input.scrollLeft}px)`;
+  });
+}
+
+// Initialize autofill for edit form fields
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Initializing edit form autofill...");
+  setupEditAutofill("edit-vehicle-no", "edit-vehicle-no-hint", "vehicleNo");
+  setupEditAutofill("edit-on-ac", "edit-on-ac-hint", "onAccount");
+  setupEditAutofill("edit-bill-to", "edit-bill-to-hint", "billTo");
+  setupEditAutofill("edit-cargo", "edit-cargo-hint", "cargo");
+  setupEditAutofill("edit-from", "edit-from-hint", "from");
+  setupEditAutofill("edit-to", "edit-to-hint", "to");
+  setupEditAutofill(
+    "edit-laden-contr-offload",
+    "edit-laden-contr-offload-hint",
+    "ladenContainerOffload"
+  );
+  setupEditAutofill("edit-transporter", "edit-transporter-hint", "transporter");
+  
+  console.log("Edit form autofill initialization complete");
+});

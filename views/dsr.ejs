@@ -45,7 +45,11 @@
           <input type="date" id="movement" name="movementDate" class="accent-purple" />
 
           <label for="vehicle-no">Vehicle No:</label>
-          <input type="text" id="vehicle-no" name="vehicleNo" class="caps" />
+          <div class="input-container">
+            <input type="text" id="vehicle-no" name="vehicleNo" class="caps" autocomplete="off" />
+            <div id="vehicle-no-autofill-hint"></div>
+          </div>
+
 
           <label for="contr-no">Container No:</label>
           <input type="text" id="contr-no" name="containerNo" class="caps" />
@@ -58,22 +62,40 @@
           </select>
 
           <label for="cargo">Cargo:</label>
-          <input type="text" id="cargo" name="cargo" class="caps" />
+          <div class="input-container">
+            <input type="text" id="cargo" name="cargo" class="caps" autocomplete="off" />
+            <div id="cargo-autofill-hint" class="autofill-hint"></div>
+          </div>
 
           <label for="on-ac">On A/C:</label>
-          <input type="text" id="on-ac" name="onAccount" class="caps" />
+          <div class="input-container">
+            <input type="text" id="on-ac" name="onAccount" class="caps" autocomplete="off" />
+            <div id="on-ac-autofill-hint" class="autofill-hint"></div>
+          </div>
 
           <label for="bill-to">Bill To:</label>
-          <input type="text" id="bill-to" name="billTo" class="caps" />
+          <div class="input-container">
+            <input type="text" id="bill-to" name="billTo" class="caps" autocomplete="off" />
+            <div id="bill-to-autofill-hint" class="autofill-hint"></div>
+          </div>
 
           <label for="from">From:</label>
-          <input type="text" id="from" name="from" class="caps" />
+          <div class="input-container">
+            <input type="text" id="from" name="from" class="caps" autocomplete="off" />
+            <div id="from-autofill-hint" class="autofill-hint"></div>
+          </div>
 
           <label for="to">To:</label>
-          <input type="text" id="to" name="to" class="caps" />
+          <div class="input-container">
+            <input type="text" id="to" name="to" class="caps" autocomplete="off" />
+            <div id="to-autofill-hint" class="autofill-hint"></div>
+          </div>
 
           <label for="laden-contr-offload">Laden Container Offload:</label>
-          <input type="text" id="laden-contr-offload" name="ladenContainerOffload" class="caps" />
+          <div class="input-container">
+            <input type="text" id="laden-contr-offload" name="ladenContainerOffload" class="caps" autocomplete="off" />
+            <div id="laden-contr-offload-autofill-hint" class="autofill-hint"></div>
+          </div>
 
           <label for="invoice-no">Invoice No:</label>
           <input type="text" id="invoice-no" name="invoiceNo" class="caps" />
@@ -135,8 +157,10 @@
           <input type="text" id="margin" name="margin" />
 
           <label for="transporter">Transporter:</label>
-          <input type="text" id="transporter" name="transporter" class="caps" />
-          <datalist id="transporter-list"></datalist>
+          <div class="input-container">
+            <input type="text" id="transporter" name="transporter" class="caps" autocomplete="off" />
+            <div id="transporter-autofill-hint" class="autofill-hint"></div>
+          </div>
 
           <label for="remarks">Remarks:</label>
           <input type="text" id="remarks" name="remarks" />

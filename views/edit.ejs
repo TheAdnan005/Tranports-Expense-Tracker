@@ -16,10 +16,13 @@
             <form id="edit-form" action="/saveChanges/<%= data._id %>" method="post">
                 <label for="edit-movement">Movement Date:</label>
                 <input type="date" id="edit-movement" class="accent-purple" name="movementDate"
-                    value="<%= new Date(data.movementDate).toISOString().split('T')[0] %>" />
+                    value="<%= data.movementDate ? new Date(data.movementDate).toISOString().split('T')[0] : '' %>" />
 
                 <label for="edit-vehicle-no">Vehicle No:</label>
-                <input type="text" id="edit-vehicle-no" class="caps" name="vehicleNo" value="<%= data.vehicleNo %>" />
+                <input type="text" id="edit-vehicle-no" class="caps" name="vehicleNo" value="<%= data.vehicleNo %>"
+                    autocomplete="off" />
+                <div id="edit-vehicle-no-hint" class="edit-autofill-hint"></div>
+
 
                 <label for="edit-contr-no">Container No:</label>
                 <input type="text" id="edit-contr-no" class="caps" name="containerNo" value="<%= data.containerNo %>" />
@@ -31,32 +34,39 @@
                     <option value="40'" <%=data.containerSize==="40'" ? "selected" : "" %>>40'</option>
                 </select>
 
+
                 <label for="edit-cargo">Cargo:</label>
-                <input type="text" id="edit-cargo" class="caps" name="cargo" value="<%= data.cargo %>" />
+                <input type="text" id="edit-cargo" name="cargo" value="<%= data.cargo %>" autocomplete="off" />
+                <div id="edit-cargo-hint" class="edit-autofill-hint"></div>
 
                 <label for="edit-on-ac">On A/C:</label>
                 <input type="text" id="edit-on-ac" class="caps" name="onAccount" value="<%= data.onAccount %>" />
+                <div id="edit-on-ac-hint" class="edit-autofill-hint"></div>
 
                 <label for="edit-bill-to">Bill To:</label>
                 <input type="text" id="edit-bill-to" class="caps" name="billTo" value="<%= data.billTo %>" />
+                <div id="edit-bill-to-hint" class="edit-autofill-hint"></div>
 
                 <label for="edit-from">From:</label>
-                <input type="text" id="edit-from" class="caps" name="from" value="<%= data.from %>" />
+                <input type="text" id="edit-from" name="from" value="<%= data.from %>" autocomplete="off" />
+                <div id="edit-from-hint" class="edit-autofill-hint"></div>
 
                 <label for="edit-to">To:</label>
-                <input type="text" id="edit-to" class="caps" name="to" value="<%= data.to %>" />
+                <input type="text" id="edit-to" name="to" value="<%= data.to %>" autocomplete="off" />
+                <div id="edit-to-hint" class="edit-autofill-hint"></div>
 
 
-                <label for="laden-contr-offload">Laden Container Offload:</label>
-                <input type="text" id="editladen-contr-offload" name="ladenContainerOffload" class="caps"
-                    value="<%= data.ladenContainerOffload %>" />
+                <label for="edit-laden-contr-offload">Laden Container Offload:</label>
+                <input type="text" id="edit-laden-contr-offload" name="ladenContainerOffload"
+                    value="<%= data.ladenContainerOffload %>" autocomplete="off" />
+                <div id="edit-laden-contr-offload-hint" class="edit-autofill-hint"></div>
 
                 <label for="edit-invoice-no">Invoice No:</label>
                 <input type="text" id="edit-invoice-no" class="caps" name="invoiceNo" value="<%= data.invoiceNo %>" />
 
                 <label for="edit-invoice-date">Invoice Date:</label>
                 <input type="date" id="edit-invoice-date" class="accent-purple" name="invoiceDate"
-                    value="<%= new Date(data.invoiceDate).toISOString().split('T')[0] %>" />
+                    value="<%= data.invoiceDate ? new Date(data.invoiceDate).toISOString().split('T')[0] : '' %>" />
 
                 <label for="edit-rate">Rate:</label>
                 <input type="number" id="edit-rate" name="rate" value="<%= data.rate %>" />
@@ -79,7 +89,6 @@
                 <label for="edit-paid-to">Paid to Vendor On:</label>
                 <input type="date" id="edit-paid-to" class="accent-purple" name="paidToVendorOn"
                     value="<%= data.paidToVendorOn ? new Date(data.paidToVendorOn).toISOString().split('T')[0] : '' %>" />
-
 
                 <label for="edit-billing-rate">Billing Rate:</label>
                 <input type="number" id="edit-billing-rate" name="billingRate" value="<%= data.billingRate %>" />
@@ -104,7 +113,7 @@
 
                 <label for="edit-payment-receipt">Payment Receipt Date:</label>
                 <input type="date" id="edit-payment-receipt" class="accent-purple" name="paymentReceiptDate"
-                    value="<%= new Date(data.paymentReceiptDate).toISOString().split('T')[0] %>" />
+                    value="<%= data.paymentReceiptDate ? new Date(data.paymentReceiptDate).toISOString().split('T')[0] : '' %>" />
 
                 <label for="edit-business-promotion">Business Promotion:</label>
                 <input type="text" id="edit-business-promotion" name="businessPromotion"
@@ -112,7 +121,7 @@
 
                 <label for="edit-paid-on">Paid On:</label>
                 <input type="date" id="edit-paid-on" class="accent-purple" name="paidOn"
-                    value="<%= new Date(data.paidOn).toISOString().split('T')[0] %>" />
+                    value="<%= data.paidOn ? new Date(data.paidOn).toISOString().split('T')[0] : '' %>" />
 
                 <label for="edit-expenses">Trip Expenses:</label>
                 <input type="text" id="edit-expenses" name="tripExpenses" value="<%= data.tripExpenses %>" />
@@ -121,9 +130,9 @@
                 <input type="text" id="edit-margin" name="margin" value="<%= data.margin %>" />
 
                 <label for="edit-transporter">Transporter:</label>
-                <input type="text" id="edit-transporter" class="caps" name="transporter" list="edit-transporter-list"
-                    value="<%= data.transporter %>" />
-                <datalist id="edit-transporter-list"></datalist>
+                <input type="text" id="edit-transporter" name="transporter" value="<%= data.transporter %>"
+                    autocomplete="off" />
+                <div id="edit-transporter-hint" class="edit-autofill-hint"></div>
 
                 <label for="edit-remarks">Remarks:</label>
                 <input type="text" id="edit-remarks" name="remarks" value="<%= data.remarks %>" class="caps" />
@@ -136,6 +145,6 @@
 
     <script src="/edit.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
 </body>
+
 </html>
