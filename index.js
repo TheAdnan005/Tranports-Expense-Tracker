@@ -1,10 +1,12 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
 const bodyParser = require("body-parser");
 const TransportSchema = require("./models/transportSchema");
 const path = require("path");
 const sl_no =0;
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));

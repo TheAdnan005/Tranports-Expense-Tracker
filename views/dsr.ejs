@@ -45,9 +45,7 @@
           <input type="date" id="movement" name="movementDate" class="accent-purple" />
 
           <label for="vehicle-no">Vehicle No:</label>
-          <input type="text" id="vehicle-no" name="vehicleNo" class="caps" list="vehicle-suggestions" />
-          <datalist id="vehicle-suggestions"></datalist>
-          <button onclick="clearStoredData()">Clear Stored Vehicles</button>
+          <input type="text" id="vehicle-no" name="vehicleNo" class="caps" />
 
           <label for="contr-no">Container No:</label>
           <input type="text" id="contr-no" name="containerNo" class="caps" />
@@ -60,28 +58,22 @@
           </select>
 
           <label for="cargo">Cargo:</label>
-          <input type="text" id="cargo" name="cargo" class="caps" list="cargo-list" />
-          <datalist id="cargo-list"></datalist>
+          <input type="text" id="cargo" name="cargo" class="caps" />
 
           <label for="on-ac">On A/C:</label>
-          <input type="text" id="on-ac" name="onAccount" class="caps" list="on-ac-list" />
-          <datalist id="on-ac-list"></datalist>
+          <input type="text" id="on-ac" name="onAccount" class="caps" />
 
           <label for="bill-to">Bill To:</label>
-          <input type="text" id="bill-to" name="billTo" class="caps" list="bill-to-list" />
-          <datalist id="bill-to-list"></datalist>
+          <input type="text" id="bill-to" name="billTo" class="caps" />
 
           <label for="from">From:</label>
-          <input type="text" id="from" name="from" class="caps" list="from-list" />
-          <datalist id="from-list"></datalist>
+          <input type="text" id="from" name="from" class="caps" />
 
           <label for="to">To:</label>
-          <input type="text" id="to" name="to" class="caps" list="to-list" />
-          <datalist id="to-list"></datalist>
+          <input type="text" id="to" name="to" class="caps" />
 
           <label for="laden-contr-offload">Laden Container Offload:</label>
-          <input type="text" id="laden-contr-offload" name="ladenContainerOffload" class="caps" list="laden-list" />
-          <datalist id="laden-list"></datalist>
+          <input type="text" id="laden-contr-offload" name="ladenContainerOffload" class="caps" />
 
           <label for="invoice-no">Invoice No:</label>
           <input type="text" id="invoice-no" name="invoiceNo" class="caps" />
@@ -159,39 +151,40 @@
       <table class="expense-table" id="expenseTable">
         <thead>
           <tr>
-            <th>Sl.no</th>
-            <th>Movement Date</th>
-            <th>Vehicle No</th>
-            <th>Container No</th>
-            <th>Container Size</th>
-            <th>Cargo</th>
-            <th>On A/C</th>
-            <th>Bill To</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Laden Container Offload</th>
-            <th>Invoice No.</th>
-            <th>Invoice Date</th>
-            <th>Rate</th>
-            <th>Halting</th>
-            <th>Total Amount</th>
-            <th>Advance Diesel Amount</th>
-            <th>Balance To Be Paid</th>
-            <th>Paid To Vendor On</th>
-            <th>Billing Rate</th>
-            <th>Empty Pickup Expense</th>
-            <th>Halting</th>
-            <th>Billing Amount</th>
-            <th>TDS Deducted</th>
-            <th>Net Amount Received</th>
-            <th>Payment Receipt Date</th>
-            <th>Business Promotion</th>
-            <th>Paid On</th>
-            <th>Trip Expenses</th>
-            <th>Margin</th>
-            <th>Transporter</th>
-            <th>Remarks</th>
-            <th>Action</th>
+            <th>SL.NO</th>
+            <th>MOVEMENT DATE</th>
+            <th>VEHICLE NO</th>
+            <th>CONTAINER NO</th>
+            <th>CONTAINER SIZE</th>
+            <th>CARGO</th>
+            <th>ON A/C</th>
+            <th>BILL TO</th>
+            <th>FROM</th>
+            <th>TO</th>
+            <th>LADEN CONTAINER OFFLOAD</th>
+            <th>INVOICE NO.</th>
+            <th>INVOICE DATE</th>
+            <th>RATE</th>
+            <th>HALTING</th>
+            <th>TOTAL AMOUNT</th>
+            <th>ADVANCE DIESEL AMOUNT</th>
+            <th>BALANCE TO BE PAID</th>
+            <th>PAID TO VENDOR ON</th>
+            <th>BILLING RATE</th>
+            <th>EMPTY PICKUP EXPENSE</th>
+            <th>HALTING</th>
+            <th>BILLING AMOUNT</th>
+            <th>TDS DEDUCTED</th>
+            <th>NET AMOUNT RECEIVED</th>
+            <th>PAYMENT RECEIPT DATE</th>
+            <th>BUSINESS PROMOTION</th>
+            <th>PAID ON</th>
+            <th>TRIP EXPENSES</th>
+            <th>MARGIN</th>
+            <th>TRANSPORTER</th>
+            <th>REMARKS</th>
+            <th>ACTION</th>
+
           </tr>
         </thead>
         <tbody>
@@ -201,7 +194,7 @@
                 <td>
                   <%= sl_no %>
                 </td>
-                <td>
+                <td class="dates">
                   <%= item.movementDate %>
                 </td>
                 <td>
@@ -234,7 +227,7 @@
                 <td>
                   <%= item.invoiceNo %>
                 </td>
-                <td>
+                <td class="dates">
                   <%= item.invoiceDate %>
                 </td>
                 <td>
@@ -252,7 +245,7 @@
                 <td>
                   <%= item.balanceToBePaid %>
                 </td>
-                <td>
+                <td class="dates">
                   <%= item.paidToVendorOn %>
                 </td>
                 <td>
@@ -273,13 +266,13 @@
                 <td>
                   <%= item.netAmountReceived %>
                 </td>
-                <td>
+                <td class="dates">
                   <%= item.paymentReceiptDate %>
                 </td>
                 <td>
                   <%= item.businessPromotion %>
                 </td>
-                <td>
+                <td class="dates">
                   <%= item.paidOn %>
                 </td>
                 <td>
@@ -291,13 +284,16 @@
                 <td>
                   <%= item.transporter %>
                 </td>
-                <td>
+                <td class="remark">
                   <%= item.remarks %>
                 </td>
                 <td class="action">
-                  <a href="edit/<%= item._id %>">Edit</a>
-                  <a href="delete/<%= item._id %>">Delete</a>
+                  <a href="edit/<%= item._id %>" class="btn edit-btn">Edit</a>
+                  <a href="delete/<%= item._id %>" class="btn delete-btn"
+                    onclick="confirmDelete(event, '<%= item._id %>')">Delete</a>
+
                 </td>
+
             </tr>
             <% }) %>
         </tbody>
@@ -308,6 +304,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="/dsr.js"></script>
 </body>
 

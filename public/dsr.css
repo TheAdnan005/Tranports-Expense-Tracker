@@ -585,9 +585,7 @@ tr:hover {
   background-color: #d13333;
 }
 
-/* Edit Button */
 .edit-btn {
-  height: 20px;
   background-color: #c1a3ff;
   color: white;
   border: none;
@@ -600,3 +598,44 @@ tr:hover {
 .edit-btn:hover {
   background-color: #a07efc;
 }
+
+.btn {
+  display: inline-block;
+  padding: 8px 12px;
+  margin: 5px;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+.edit-btn {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #45a049;
+}
+
+.delete-btn {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+td,th {
+  text-align: center !important; 
+  vertical-align: middle;
+  white-space: nowrap; /* Prevents wrapping */
+  padding: 10px; /* Adds spacing inside the cell */
+}
+.remark{
+  white-space: wrap;
+  min-width: 200px;
+
+}
+

@@ -1,4 +1,3 @@
-
 flatpickr("input[type='date']", {
     dateFormat: "Y-m-d",
     theme: "dark",
@@ -11,13 +10,6 @@ const addEntryBtn = document.querySelector(".add-entry");
 const clearBtn = document.querySelector(".clear");
 const entryTable = document.querySelector("#expenseTable tbody");
 
-const datalistVehicle = document.getElementById("vehicle-suggestions");
-const datalistCargo = document.getElementById("cargo-list");
-const datalistOnAc = document.getElementById("on-ac-list");
-const datalistBillTo = document.getElementById("bill-to-list");
-const datalistFrom = document.getElementById("from-list");
-const datalistTo = document.getElementById("to-list");
-const datalistLaden = document.getElementById("laden-list");
 
 function toggleForm() {
     const form = document.getElementById("popupForm");
@@ -78,11 +70,23 @@ document.getElementById("expenses").addEventListener("input", calculateTotal);
 
 
 
-// edit calculate function 
-
-
-
-
+function confirmDelete(event, itemId) {
+    event.preventDefault(); // Prevent direct navigation
+  
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#6b46c1",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = `delete/${itemId}`; // Proceed with deletion
+      }
+    });
+  }
 
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("input").forEach(input => {
@@ -92,9 +96,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+      
+    const toggleIcons = (showSearch) => {
+      searchIcon.style.display = showSearch ? "block" : "none";
+      closeIcon.style.display = showSearch ? "none" : "block";
+    };
+  
+    searchIcon.onclick = () => { searchBox.classList.add("active"); searchBox.focus(); toggleIcons(false); };
+    closeIcon.onclick = () => { searchBox.classList.remove("active"); searchBox.value = ""; toggleIcons(true); };
+    searchBox.oninput = () => toggleIcons(!searchBox.value);
+  });
+
+  
+  
+
 
 addEntryBtn.addEventListener("click", toggleForm);
 clearBtn.addEventListener("click", resetForm);
 searchIcon.addEventListener("click", () => searchBox.classList.add("active"));
 closeIcon.addEventListener("click", () => searchBox.classList.remove("active"));
-updateAllSuggestions();
