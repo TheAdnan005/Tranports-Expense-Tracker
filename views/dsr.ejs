@@ -7,18 +7,19 @@
   <link rel="stylesheet" href="/dsr.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <title>DSR Expenses</title>
-
-
 </head>
 
 <body>
   <h1>DSR EXPENSES</h1>
+  <a href="/" class="goBackHome">Go back Home</a>
   <div class="top box">
     <div class="search-container">
       <input class="search" type="text" placeholder="Search here" />
       <img class="search-icon" src="assets/search.png" alt="Search" />
       <img class="close-icon" src="assets/close.png" alt="Close" />
     </div>
+
+    <!-- <div class="results-container"></div> -->
 
     <div class="filter">
       <select id="filters">
@@ -321,7 +322,7 @@
             </tr>
             <% }) %>
         </tbody>
-        <button onclick="exportToExcel()">Export to Excel</button>
+        <!-- <button onclick="exportToExcel()">Export to Excel</button> -->
       </table>
     </div>
 

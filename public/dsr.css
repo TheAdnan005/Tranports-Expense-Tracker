@@ -13,7 +13,6 @@ body {
   transition: background-color 0.3s ease;
 }
 
-
 .table-container {
   width: 100%;
   max-height: 400px; /* Adjust height as needed */
@@ -45,11 +44,10 @@ body {
   border: 1px solid #ddd;
 }
 
-.tablee{
+.tablee {
   /* background: red; */
   overflow-y: scroll;
 }
-
 
 .container {
   width: 90vw;
@@ -241,7 +239,7 @@ body {
 .caps {
   text-transform: uppercase;
 }
-.action a{
+.action a {
   margin-bottom: 3px;
 }
 .popup-form {
@@ -277,7 +275,7 @@ body {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
+  /* margin: 20px 0; */
 }
 
 table th,
@@ -288,6 +286,8 @@ table td {
 }
 
 table th {
+  position: relative;
+  top: -1px;
   background-color: #f4f4f4;
 }
 
@@ -610,7 +610,7 @@ tr:hover {
 }
 
 .edit-btn {
-  background-color: #4CAF50; /* Green */
+  background-color: #4caf50; /* Green */
   color: white;
 }
 
@@ -627,16 +627,16 @@ tr:hover {
   background-color: #d32f2f;
 }
 
-td,th {
-  text-align: center !important; 
+td,
+th {
+  text-align: center !important;
   vertical-align: middle;
   white-space: nowrap; /* Prevents wrapping */
   padding: 10px; /* Adds spacing inside the cell */
 }
-.remark{
+.remark {
   white-space: wrap;
   min-width: 200px;
-
 }
 
 .input-container {
@@ -656,7 +656,6 @@ td,th {
   white-space: nowrap;
   background: transparent;
   z-index: 3;
-  
 }
 .edit-autofill-hint {
   position: relative;
@@ -670,12 +669,26 @@ td,th {
   white-space: nowrap;
   background: transparent;
   z-index: 3;
-  
 }
-
 
 #vehicle-no {
   position: relative;
   z-index: 1;
   /* background: transparent; */
+}
+
+.results-container {
+  max-height: 50px;
+  overflow-y: scroll;
+}
+
+
+
+.goBackHome{
+  text-decoration: none;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  color: blue;
+  font-size: small;
 }

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/expenditure.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <title>Edit Transportation Expenditure</title>
+</head>
+
+<body>
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <h2>Edit Entry</h2>
+      <form id="edit-form" action="/expenditureEdit/<%= data._id %>" method="post">
+        <!-- Trip Details Section -->
+        <h3 class="section-header">Trip Details</h3>
+
+        <label for="edit-trip-date">Trip Date:</label>
+        <input type="date" id="edit-trip-date" class="accent-purple" name="tripDate"
+          value="<%= data.tripDate ? new Date(data.tripDate).toISOString().split('T')[0] : '' %>" />
+
+        <label for="edit-contract-no">Contract No:</label>
+        <input type="text" id="edit-contract-no" class="caps" name="contrNo" value="<%= data.contrNo %>" />
+
+        <label for="edit-vehicle-size">Vehicle Size:</label>
+        <select id="edit-vehicle-size" name="vehicleSize">
+          <option value="" disabled>Select Size</option>
+          <option value="20'" <%= data.vehicleSize==="20'" ? "selected" : "" %>>20'</option>
+          <option value="40'" <%= data.vehicleSize==="40'" ? "selected" : "" %>>40'</option>
+          <option value="Other" <%= data.vehicleSize==="Other" ? "selected" : "" %>>Other</option>
+        </select>
+
+        <label for="edit-customer">Customer:</label>
+        <input type="text" id="edit-customer" class="caps" name="customer" value="<%= data.customer %>" autocomplete="off" />
+        <div id="edit-customer-hint" class="edit-autofill-hint"></div>
+
+        <!-- Route Information Section -->
+        <h3 class="section-header">Route Information</h3>
+
+        <label for="edit-from">From:</label>
+        <input type="text" id="edit-from" class="caps" name="from" value="<%= data.from %>" autocomplete="off" />
+        <div id="edit-from-hint" class="edit-autofill-hint"></div>
+
+        <label for="edit-to">To:</label>
+        <input type="text" id="edit-to" class="caps" name="to" value="<%= data.to %>" autocomplete="off" />
+        <div id="edit-to-hint" class="edit-autofill-hint"></div>
+
+        <label for="edit-back-to">Back To:</label>
+        <input type="text" id="edit-back-to" class="caps" name="backTo" value="<%= data.backTo %>" autocomplete="off" />
+        <div id="edit-back-to-hint" class="edit-autofill-hint"></div>
+
+        <label for="edit-trip-return-date">Trip Return Date:</label>
+        <input type="date" id="edit-trip-return-date" class="accent-purple" name="tripReturnDate"
+          value="<%= data.tripReturnDate ? new Date(data.tripReturnDate).toISOString().split('T')[0] : '' %>" />
+
+        <!-- Mileage Details Section -->
+        <h3 class="section-header">Mileage Details</h3>
+
+        <label for="edit-start-reading">Start Reading:</label>
+        <input type="number" id="edit-start-reading" name="startReading" value="<%= data.startReading %>" />
+
+        <label for="edit-closing-reading">Closing Reading:</label>
+        <input type="number" id="edit-closing-reading" name="closingReading" value="<%= data.closingReading %>" />
+
+        <label for="edit-total-kms">Total KMs:</label>
+        <input type="number" id="edit-total-kms" name="totalKms" value="<%= data.totalKms %>" />
+
+        <label for="edit-kms-per-liter">KMs Per Liter:</label>
+        <input type="number" id="edit-kms-per-liter" name="kmsPerLiter" value="<%= data.kmsPerLiter %>" step="0.01" />
+
+        <!-- Fuel Details Section -->
+        <h3 class="section-header">Fuel Details</h3>
+
+        <label for="edit-diesel-quantity">Diesel Quantity (Liters):</label>
+        <input type="number" id="edit-diesel-quantity" name="dieselQuantity" value="<%= data.dieselQuantity %>" step="0.01" />
+
+        <label for="edit-diesel-amount">Diesel Amount:</label>
+        <input type="number" id="edit-diesel-amount" name="dieselAmount" value="<%= data.dieselAmount %>" />
+
+        <!-- Expenses Section -->
+        <h3 class="section-header">Expenses</h3>
+
+        <label for="edit-toll-gate-expense">Toll Gate Expense:</label>
+        <input type="number" id="edit-toll-gate-expense" name="tollGateExpense" value="<%= data.tollGateExpense %>" />
+
+        <label for="edit-other-expenses">Other Expenses:</label>
+        <input type="number" id="edit-other-expenses" name="otherExpenses" value="<%= data.otherExpenses %>" />
+
+        <label for="edit-bp-expenses">BP Expenses:</label>
+        <input type="number" id="edit-bp-expenses" name="bpExpenses" value="<%= data.bpExpenses %>" />
+
+        <label for="edit-taxes-amount">Taxes Amount:</label>
+        <input type="number" id="edit-taxes-amount" name="taxesAmount" value="<%= data.taxesAmount %>" />
+
+        <label for="edit-driver-salary">Driver Salary:</label>
+        <input type="number" id="edit-driver-salary" name="driverSalary" value="<%= data.driverSalary %>" />
+
+        <label for="edit-halting-charges">Halting Charges:</label>
+        <input type="number" id="edit-halting-charges" name="haltingCharges" value="<%= data.haltingCharges %>" />
+
+        <label for="edit-total-expenses">Total Expenses:</label>
+        <input type="number" id="edit-total-expenses" name="totalExpenses" value="<%= data.totalExpenses %>" />
+
+        <!-- Revenue Details Section -->
+        <h3 class="section-header">Revenue Details</h3>
+
+        <label for="edit-movement-rate">Movement Rate:</label>
+        <input type="number" id="edit-movement-rate" name="movementRate" value="<%= data.movementRate %>" />
+
+        <label for="edit-invoice-amount">Invoice Amount:</label>
+        <input type="number" id="edit-invoice-amount" name="invoiceAmount" value="<%= data.invoiceAmount %>" />
+
+        <label for="edit-advance-paid">Advance Paid:</label>
+        <input type="number" id="edit-advance-paid" name="advancePaid" value="<%= data.advancePaid %>" />
+
+        <label for="edit-balance-to-receive">Balance To Receive:</label>
+        <input type="number" id="edit-balance-to-receive" name="balanceToReceive" value="<%= data.balanceToReceive %>" />
+
+        <!-- Profitability Section -->
+        <h3 class="section-header">Profitability</h3>
+
+        <label for="edit-net-margin">Net Margin:</label>
+        <input type="number" id="edit-net-margin" name="netMargin" value="<%= data.netMargin %>" />
+
+        <!-- Personnel Section -->
+        <h3 class="section-header">Personnel</h3>
+
+        <label for="edit-driver-name">Driver Name:</label>
+        <input type="text" id="edit-driver-name" class="caps" name="driverName" value="<%= data.driverName %>" autocomplete="off" />
+        <div id="edit-driver-name-hint" class="edit-autofill-hint"></div>
+
+        <label for="edit-driver-payment-date">Driver Payment Date:</label>
+        <input type="date" id="edit-driver-payment-date" class="accent-purple" name="driverPaymentDate"
+          value="<%= data.driverPaymentDate ? new Date(data.driverPaymentDate).toISOString().split('T')[0] : '' %>" />
+
+        <!-- Additional Information -->
+        <h3 class="section-header">Additional Information</h3>
+
+        <label for="edit-remarks">Remarks:</label>
+        <input type="text" id="edit-remarks" name="remarks" value="<%= data.remarks %>" />
+
+        <button type="submit" class="confirm-btn" id="confirm-edit">Save Changes</button>
+        <button type="button" class="cancel-btn" onclick="closeModal('edit-modal')">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="/expenditure.js"></script>
+</body>
+
+</html>

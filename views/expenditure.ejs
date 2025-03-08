@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/expenditure.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <title>Transportation Expenditure</title>
+</head>
+
+<body>
+    <h1>Transportation Expenditure</h1>
+    <a href="/" class="goBackHome">Go back Home</a>
+    <div class="top box">
+        <div class="search-container">
+            <input class="search" type="text" placeholder="Search here" />
+            <img class="search-icon" src="assets/search.png" alt="Search" />
+            <img class="close-icon" src="assets/close.png" alt="Close" />
+        </div>
+
+        <div class="filter">
+            <select id="filters">
+                <option class="first" va="">Filter By</option>
+                <option value="contrNo">Container No</option>
+                <option value="customer">Customer</option>
+                <option value="from">From</option>
+                <option value="to">To</option>
+                <option value="driverName">Driver</option>
+            </select>
+        </div>
+
+        <button class="add-expense" onclick="toggleForm()">+</button>
+    </div>
+    <div class="container">
+        <div id="overlay" class="overlay" onclick="toggleForm()"></div>
+        <div class="popup-form" id="popupForm">
+            <div class="form-header">
+                <span>Add Transportation Details</span>
+                <button class="clear" onclick="clearForm()">Clear</button>
+                <button class="close" onclick="toggleForm()">×</button>
+            </div>
+            <form action="/expenditurePost" method="POST" id="editForm">
+                <div class="popup-form-grid" id="popupFormGrid">
+
+                    <label for="trip-date"> TRIP DATE:</label>
+                    <input type="date" id="trip-date" name="tripDate" class="accent-purple" />
+
+                    <label for="contract-no">CONTAINER NO:</label>
+                    <input type="text" id="contract-no" name="contrNo" class="caps" />
+
+                    <label for="vehicle-size">SIZE:</label>
+                    <select id="vehicle-size" name="vehicleSize">
+                        <option class="dropdown-none" value="" disabled selected>20' / 40' </option>
+                        <option value="20'">20'</option>
+                        <option value="40'">40'</option>
+                    </select>
+
+                    <label for="customer">CUSTOMER:</label>
+                    <div class="input-container">
+                        <input type="text" id="customer" name="customer" class="caps" autocomplete="off" />
+                        <div id="customer-autofill-hint" class="autofill-hint"></div>
+                    </div>
+
+                    <label for="from">FROM:</label>
+                    <div class="input-container">
+                        <input type="text" id="from" name="from" class="caps" autocomplete="off" />
+                        <div id="from-autofill-hint" class="autofill-hint"></div>
+                    </div>
+
+                    <label for="to">TO:</label>
+                    <div class="input-container">
+                        <input type="text" id="to" name="to" class="caps" autocomplete="off" />
+                        <div id="to-autofill-hint" class="autofill-hint"></div>
+                    </div>
+
+                    <label for="back-to">BACK TO:</label>
+                    <div class="input-container">
+                        <input type="text" id="back-to" name="backTo" class="caps" autocomplete="off" />
+                        <div id="back-to-autofill-hint" class="autofill-hint"></div>
+                    </div>
+
+                    <label for="diesel-quantity">DIESEL QTY (Liters):</label>
+                    <input type="number" id="diesel-quantity" name="dieselQuantity" step="0.01" />
+
+                    <label for="diesel-amount">AMOUNT:</label>
+                    <input type="number" id="diesel-amount" name="dieselAmount" />
+
+                    <label for="toll-gate-expense">TOLL GATE:</label>
+                    <input type="number" id="toll-gate-expense" name="tollGateExpense" />
+
+                    <label for="other-expenses">OTHER EXP:</label>
+                    <input type="number" id="other-expenses" name="otherExpenses" />
+
+                    <label for="bp-expenses">BP EXP:</label>
+                    <input type="number" id="bp-expenses" name="bpExpenses" />
+
+                    <label for="taxes-amount">TOTAL TAXES:</label>
+                    <input type="number" id="taxes-amount" name="taxesAmount" />
+
+                    <label for="driver-salary">DRI SALARY:</label>
+                    <input type="number" id="driver-salary" name="driverSalary" />
+
+                    <label for="total-expenses">TOTAL EXP:</label>
+                    <input type="number" id="total-expenses" name="totalExpenses" />
+
+                    <label for="halting-charges">HALTING CHRGS:</label>
+                    <input type="number" id="halting-charges" name="haltingCharges" />
+
+                    <label for="movement-rate">MVMNT RATE:</label>
+                    <input type="number" id="movement-rate" name="movementRate" />
+
+                    <label for="invoice-amount">TOTAL AMOUNT:</label>
+                    <input type="number" id="invoice-amount" name="invoiceAmount" />
+
+                    <label for="net-margin">NET MARGIN:</label>
+                    <input type="number" id="net-margin" name="netMargin" />
+
+                    <label for="advance-paid">ADV PAID TO DRIVER:</label>
+                    <input type="number" id="advance-paid" name="advancePaid" />
+
+                    <label for="balance-to-receive">BAL TO SADAF:</label>
+                    <input type="number" id="balance-to-receive" name="balanceToReceive" />
+
+                    <label for="trip-return-date">TRIP RETURN DATE ON:</label>
+                    <input type="date" id="trip-return-date" name="tripReturnDate" class="accent-purple" />
+
+                    <label for="start-reading">START READING:</label>
+                    <input type="number" id="start-reading" name="startReading" />
+
+                    <label for="closing-reading">CLOSE READING:</label>
+                    <input type="number" id="closing-reading" name="closingReading" />
+
+                    <label for="total-kms">TRIP TOTAL KMS:</label>
+                    <input type="number" id="total-kms" name="totalKms" />
+
+                    <label for="kms-per-liter">MILEAGE (KMs Per Liter):</label>
+                    <input type="number" id="kms-per-liter" name="kmsPerLiter" step="0.01" />
+
+                    <label for="remarks">Remarks:</label>
+                    <input type="text" id="remarks" name="remarks" />
+
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="tablee">
+            <table class="expense-table" id="expenseTable">
+                <thead>
+                    <tr>
+                        <th>SL.NO</th>
+                        <th>TRIP DATE</th>
+                        <th>CONTAINER NO</th>
+                        <th>VEHICLE SIZE</th>
+                        <th>CUSTOMER</th>
+                        <th>FROM</th>
+                        <th>TO</th>
+                        <th>BACK TO</th>
+                        <th>DIESEL QTY</th>
+                        <th>DIESEL AMOUNT</th>
+                        <th>TOLL GATE</th>
+                        <th>OTHER EXPENSES</th>
+                        <th>BP EXPENSES</th>
+                        <th>TAXES</th>
+                        <th>DRIVER SALARY</th>
+                        <th>TOTAL EXPENSES</th>
+                        <th>HALTING CHARGES</th>
+                        <th>MOVEMENT RATE</th>
+                        <th>INVOICE AMOUNT</th>
+                        <th>NET MARGIN</th>
+                        <th>ADVANCE PAID</th>
+                        <th>BALANCE TO RECEIVE</th>
+                        <th>TRIP RETURN DATE</th>
+                        <th>START READING</th>
+                        <th>CLOSING READING</th>
+                        <th>TOTAL KMS</th>
+                        <th>KMS PER LITER</th>
+                        <th>REMARKS</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% data.forEach(item=> { %>
+                        <tr>
+                            <%sl_no=sl_no+1 %>
+                                <td>
+                                    <%= sl_no %>
+                                </td>
+                                <td class="dates">
+                                    <%= item.tripDate %>
+                                </td>
+                                <td>
+                                    <%= item.contrNo %>
+                                </td>
+                                <td>
+                                    <%= item.vehicleSize %>
+                                </td>
+                                <td>
+                                    <%= item.customer %>
+                                </td>
+                                <td>
+                                    <%= item.from %>
+                                </td>
+                                <td>
+                                    <%= item.to %>
+                                </td>
+                                <td>
+                                    <%= item.backTo %>
+                                </td>
+                                <td class="dates">
+                                    <%= item.tripReturnDate %>
+                                </td>
+                                <td>
+                                    <%= item.startReading %>
+                                </td>
+                                <td>
+                                    <%= item.closingReading %>
+                                </td>
+                                <td>
+                                    <%= item.totalKms %>
+                                </td>
+                                <td>
+                                    <%= item.kmsPerLiter %>
+                                </td>
+                                <td>
+                                    <%= item.dieselQuantity %>
+                                </td>
+                                <td>
+                                    <%= item.dieselAmount %>
+                                </td>
+                                <td>
+                                    <%= item.tollGateExpense %>
+                                </td>
+                                <td>
+                                    <%= item.otherExpenses %>
+                                </td>
+                                <td>
+                                    <%= item.bpExpenses %>
+                                </td>
+                                <td>
+                                    <%= item.taxesAmount %>
+                                </td>
+                                <td>
+                                    <%= item.driverSalary %>
+                                </td>
+                                <td>
+                                    <%= item.haltingCharges %>
+                                </td>
+                                <td>
+                                    <%= item.totalExpenses %>
+                                </td>
+                                <td>
+                                    <%= item.movementRate %>
+                                </td>
+                                <td>
+                                    <%= item.invoiceAmount %>
+                                </td>
+                                <td>
+                                    <%= item.advancePaid %>
+                                </td>
+                                <td>
+                                    <%= item.balanceToReceive %>
+                                </td>
+                                <td>
+                                    <%= item.netMargin %>
+                                </td>
+                                <td class="remark">
+                                    <%= item.remarks %>
+                                </td>
+                                <td class="action">
+                                    <a href="expenditureEdit/<%= item._id %>" class="btn edit-btn">Edit</a>
+                                    <a href="Expdelete/<%= item._id %>" class="btn delete-btn"
+                                        onclick="confirmDelete(event, '<%= item._id %>')">Delete</a>
+                                </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script src="/expenditure.js"></script>
+</body>
+
+</html>

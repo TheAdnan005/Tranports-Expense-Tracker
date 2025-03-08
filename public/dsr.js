@@ -9,6 +9,8 @@ const searchBox = document.querySelector(".search");
 const addEntryBtn = document.querySelector(".add-entry");
 const clearBtn = document.querySelector(".clear");
 const entryTable = document.querySelector("#expenseTable tbody");
+const searchInput = document.querySelector('.search');
+const tableBody = document.querySelector('tbody');
 
 function toggleForm() {
   const form = document.getElementById("popupForm");
@@ -112,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function setupAutofill(inputId, hintId, field) {
-
   const input = document.querySelector(`#${inputId}`);
   const hint = document.querySelector(`#${hintId}`);
   hint.classList.add("autofill-hint");
@@ -226,27 +227,49 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const fields = [
-    { id: "edit-vehicle-no", field: "vehicleNo" },
-    { id: "edit-cargo", field: "cargo" },
-    { id: "edit-transporter", field: "transporter" },
-    { id: "edit-from", field: "from" },
-    { id: "edit-to", field: "to" },
-    { id: "editladen-contr-offload", field: "ladenContainerOffload" },
-  ];
+let originalRows = Array.from(tableBody.querySelectorAll('tr'));
 
-  fields.forEach(({ id, field }) => {
-    setupAutofill(id, `${id}-hint`, field);
-    console.log("sent to process");
-  });
+// Search function that checks all columns
+function performSearch(searchTerm) {
+    console.log("Searching for:", searchTerm); // Debugging
+    const searchLower = searchTerm.toLowerCase();
+    
+    tableBody.querySelectorAll('tr').forEach(row => {
+        const cells = row.querySelectorAll('td');
+        let match = false;
+        
+        // Check each cell in the row
+        cells.forEach(cell => {
+            const cellText = cell.textContent.toLowerCase();
+            if (cellText.includes(searchLower)) {
+                match = true;
+            }
+        });
+        
+        // Show/hide row based on match
+        row.style.display = match ? '' : 'none';
+    });
+}
 
-  flatpickr(".accent-purple", {
-    allowInput: true,
-    dateFormat: "Y-m-d",
-    defaultDate: null,
-  });
+const debounceSearch = (func, delay = 200) => {
+    let timeout;
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+};
+
+searchInput.addEventListener('input', debounceSearch((e) => {
+    performSearch(e.target.value.trim());
+}));
+
+closeIcon.addEventListener('click', () => {
+    searchInput.value = '';
+    tableBody.querySelectorAll('tr').forEach(row => {
+        row.style.display = ''; // Show all rows
+    });
 });
+
 
 addEntryBtn.addEventListener("click", toggleForm);
 clearBtn.addEventListener("click", resetForm);
