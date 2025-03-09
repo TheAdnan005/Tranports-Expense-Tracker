@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views'));
-app.get('/', async (req, res) => {  // Make the route handler async
+app.get('/', async (req, res) => {
   async function calculateTotalSum() {
     try {
       const result = await TransportSchema.aggregate([
@@ -39,14 +39,10 @@ app.get('/', async (req, res) => {  // Make the route handler async
       return result[0]?.totalSum || 0;
     } catch (error) {
       console.error("Error calculating sum:", error);
-      return 0; // Return 0 or another default value in case of error
+      return 0;
     }
   }
-  
-  // Await the function call
   const totalsum = await calculateTotalSum();
-  
-  // Now render with the calculated value
   res.render('index', { totalsum });
 });
 
@@ -68,11 +64,9 @@ app.get('/expenditure',async (req,res)=>{
   let data = await ExpenditureSchema.find();
   data = data.map(item => ({
     ...item._doc,
-    movementDate: item.movementDate ? formatDate(item.movementDate) : '',
-    invoiceDate: item.invoiceDate ? formatDate(item.invoiceDate) : '',
-    paidToVendorOn: item.paidToVendorOn ? formatDate(item.paidToVendorOn) : '',
-    paymentReceiptDate: item.paymentReceiptDate ? formatDate(item.paymentReceiptDate) : '',
-    paidOn: item.paidOn ? formatDate(item.paidOn) : '',
+    tripDate: item.tripDate ? formatDate(item.tripDate) : '',
+    tripReturnDate: item.tripReturnDate ? formatDate(item.tripReturnDate) : '',
+
 }));
   res.render('expenditure',{ sl_no, data });
 })
@@ -134,6 +128,26 @@ app.get("/search", async (req, res) => {
 
   try {
     const results = await TransportSchema.find(
+      { [field]: new RegExp(searchQuery, "i") }, // Dynamic field matching
+      { [field]: 1, _id: 0 } // Dynamic field selection
+    ).limit(5).lean();
+
+    res.json(results.map((item) => item[field])); // Return array of field values
+  } catch (err) {
+    console.error(`Error fetching ${field}:`, err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+app.get("/expSearch", async (req, res) => {
+  const { q: searchQuery, field } = req.query;
+
+  if (!searchQuery || !field) {
+    return res.status(400).json({ error: "Missing query parameters" });
+  }
+
+  try {
+    const results = await ExpenditureSchema.find(
       { [field]: new RegExp(searchQuery, "i") }, // Dynamic field matching
       { [field]: 1, _id: 0 } // Dynamic field selection
     ).limit(5).lean();

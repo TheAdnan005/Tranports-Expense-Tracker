@@ -29,8 +29,14 @@
                 <option value="driverName">Driver</option>
             </select>
         </div>
-
+        
         <button class="add-expense" onclick="toggleForm()">+</button>
+
+        <div class="vehicle-numbers navigation">
+            <button id="2356" class="nav-button active-nav">2356</button>
+            <button id="3132" class="nav-button">3132</button>
+            <button id="3959" class="nav-button">3959</button>
+        </div>
     </div>
     <div class="container">
         <div id="overlay" class="overlay" onclick="toggleForm()"></div>
@@ -48,6 +54,12 @@
 
                     <label for="contract-no">CONTAINER NO:</label>
                     <input type="text" id="contract-no" name="contrNo" class="caps" />
+
+                    <label for="customer">VEHICLE NUMBER :</label>
+                    <div class="input-container">
+                        <input type="text" id="vehicle-number" name="vehicleNumber" class="caps" autocomplete="off" />
+                        <div id="vehicle-number-autofill-hint" class="autofill-hint"></div>
+                    </div>
 
                     <label for="vehicle-size">SIZE:</label>
                     <select id="vehicle-size" name="vehicleSize">
@@ -119,6 +131,7 @@
                     <label for="advance-paid">ADV PAID TO DRIVER:</label>
                     <input type="number" id="advance-paid" name="advancePaid" />
 
+
                     <label for="balance-to-receive">BAL TO SADAF:</label>
                     <input type="number" id="balance-to-receive" name="balanceToReceive" />
 
@@ -137,10 +150,17 @@
                     <label for="kms-per-liter">MILEAGE (KMs Per Liter):</label>
                     <input type="number" id="kms-per-liter" name="kmsPerLiter" step="0.01" />
 
-                    <label for="remarks">Remarks:</label>
-                    <input type="text" id="remarks" name="remarks" />
+                    <label for="driver-name">DRIVER NAME :</label>
+                    <div class="input-container">
+                        <input type="text" id="driver-name" name="driverName" class="caps" autocomplete="off" />
+                        <div id="driver-name-autofill-hint" class="autofill-hint"></div>
+                    </div>
 
-                    <button type="submit">Submit</button>
+                    <label for="remarks">Remarks:</label>
+                    <input type="text" id="remarks" class="caps" name="remarks" />
+                    <div class="btn-container">
+                        <button type="submit" class="add-entry">Submit</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -151,6 +171,7 @@
                         <th>SL.NO</th>
                         <th>TRIP DATE</th>
                         <th>CONTAINER NO</th>
+                        <th>VEHICLE NO</th>
                         <th>VEHICLE SIZE</th>
                         <th>CUSTOMER</th>
                         <th>FROM</th>
@@ -161,20 +182,21 @@
                         <th>TOLL GATE</th>
                         <th>OTHER EXPENSES</th>
                         <th>BP EXPENSES</th>
-                        <th>TAXES</th>
+                        <th>TOTAL TAXES</th>
                         <th>DRIVER SALARY</th>
                         <th>TOTAL EXPENSES</th>
                         <th>HALTING CHARGES</th>
                         <th>MOVEMENT RATE</th>
-                        <th>INVOICE AMOUNT</th>
+                        <th>TOTAL AMOUNT</th>
                         <th>NET MARGIN</th>
-                        <th>ADVANCE PAID</th>
+                        <th>ADVANCE PAID TO DRIVER</th>
                         <th>BALANCE TO RECEIVE</th>
                         <th>TRIP RETURN DATE</th>
                         <th>START READING</th>
                         <th>CLOSING READING</th>
-                        <th>TOTAL KMS</th>
-                        <th>KMS PER LITER</th>
+                        <th>TRIP TOTAL KMS</th>
+                        <th>MILEAGE</th>
+                        <th>DRIVER NAME</th>
                         <th>REMARKS</th>
                         <th>ACTION</th>
                     </tr>
@@ -193,6 +215,9 @@
                                     <%= item.contrNo %>
                                 </td>
                                 <td>
+                                    <%= item.vehicleNumber %>
+                                </td>
+                                <td>
                                     <%= item.vehicleSize %>
                                 </td>
                                 <td>
@@ -206,21 +231,6 @@
                                 </td>
                                 <td>
                                     <%= item.backTo %>
-                                </td>
-                                <td class="dates">
-                                    <%= item.tripReturnDate %>
-                                </td>
-                                <td>
-                                    <%= item.startReading %>
-                                </td>
-                                <td>
-                                    <%= item.closingReading %>
-                                </td>
-                                <td>
-                                    <%= item.totalKms %>
-                                </td>
-                                <td>
-                                    <%= item.kmsPerLiter %>
                                 </td>
                                 <td>
                                     <%= item.dieselQuantity %>
@@ -244,10 +254,10 @@
                                     <%= item.driverSalary %>
                                 </td>
                                 <td>
-                                    <%= item.haltingCharges %>
+                                    <%= item.totalExpenses %>
                                 </td>
                                 <td>
-                                    <%= item.totalExpenses %>
+                                    <%= item.haltingCharges %>
                                 </td>
                                 <td>
                                     <%= item.movementRate %>
@@ -256,13 +266,31 @@
                                     <%= item.invoiceAmount %>
                                 </td>
                                 <td>
+                                    <%= item.netMargin %>
+                                </td>
+                                <td>
                                     <%= item.advancePaid %>
                                 </td>
                                 <td>
                                     <%= item.balanceToReceive %>
                                 </td>
+                                <td class="dates">
+                                    <%= item.tripReturnDate %>
+                                </td>
                                 <td>
-                                    <%= item.netMargin %>
+                                    <%= item.startReading %>
+                                </td>
+                                <td>
+                                    <%= item.closingReading %>
+                                </td>
+                                <td>
+                                    <%= item.totalKms %>
+                                </td>
+                                <td>
+                                    <%= item.kmsPerLiter %>
+                                </td>
+                                <td>
+                                    <%= item.driverName %>
                                 </td>
                                 <td class="remark">
                                     <%= item.remarks %>
