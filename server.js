@@ -9,7 +9,17 @@ const path = require("path");
 const expenditureSchema = require("./models/expenditureSchema");
 const sl_no =0;
 
-mongoose.connect('mongodb://localhost/ExpenseTracker');
+
+
+let mongoURL = process.env.MONGODB_URL || 'mongodb+srv://shaikaddu2005:adnan2005@cluster0.jeb93.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+
+console.log('Using MongoDB URI:', mongoURL.replace(/\/\/.*@/, '//<credentials>@'));
+
+mongoose.connect(mongoURL, {
+  serverSelectionTimeoutMS: 30000,
+  connectTimeoutMS: 30000
+})
+
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,7 +43,7 @@ app.get('/', async (req, res) => {
             totalSum: { $sum: "$totalAmount" }
           }
         }
-      ]);
+      ]).option({ maxTimeMS: 30000 });
       
       // Return the result directly
       return result[0]?.totalSum || 0;
